@@ -1,9 +1,10 @@
-version: '3.8'
-
+version: '3'
 services:
-  duckduckgo:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  duckduckgo-mcp:
+    image: mcp/duckduckgo
+    container_name: duckduckgo-mcp
+    restart: unless-stopped
     ports:
-      - "8100:8000"
+      - "8080:8080"
+    environment:
+      - MCP_SERVER=true
