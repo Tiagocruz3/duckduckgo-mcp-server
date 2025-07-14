@@ -1,10 +1,18 @@
 version: '3'
+
 services:
   duckduckgo-mcp:
     image: mcp/duckduckgo
     container_name: duckduckgo-mcp
     restart: unless-stopped
-    ports:
-      - "8080:8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.duckduckgo.rule=Host(`duckduckgo-${RANDOM}.traefik.me`)"
+      - "traefik.http.services.duckduckgo.loadbalancer.server.port=8080"
     environment:
       - MCP_SERVER=true
+    command:
+      - "run"
+      - "-i"
+      - "--rm"
+      - "mcp/duckduckgo"
