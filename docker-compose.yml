@@ -7,12 +7,12 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.duckduckgo.rule=Host(`duckduckgo-${DOCKER_HOSTNAME}.traefik.me`)"  # Use generated random hostname
+      - "traefik.http.routers.duckduckgo.rule=Host(`duckduckgo-${RANDOM_STRING}.traefik.me`)"  # Using generated RANDOM_STRING
       - "traefik.http.services.duckduckgo.loadbalancer.server.port=8080"
       - "traefik.http.routers.duckduckgo.entrypoints=websecure"
       - "traefik.http.routers.duckduckgo.tls=true"
       - "traefik.http.routers.duckduckgo.tls.certresolver=myresolver"
     environment:
-      - DOCKER_HOSTNAME=${RANDOM_STRING}  # Set random string for each deployment
+      - RANDOM_STRING=${RANDOM_STRING}  # Pass the random string as an environment variable
     ports:
       - "8080:8080"
