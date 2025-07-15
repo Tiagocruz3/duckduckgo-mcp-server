@@ -7,12 +7,12 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.duckduckgo.rule=Host(`duckduckgo-${RANDOM}.traefik.me`)"  # Traefik auto-generates random subdomains
-      - "traefik.http.services.duckduckgo.loadbalancer.server.port=8080"  # Map port to the container's port
-      - "traefik.http.routers.duckduckgo.entrypoints=websecure"  # Enable HTTPS entrypoint
-      - "traefik.http.routers.duckduckgo.tls=true"  # Enable TLS (SSL)
-      - "traefik.http.routers.duckduckgo.tls.certresolver=myresolver"  # Enable SSL via Let's Encrypt
+      - "traefik.http.routers.duckduckgo.rule=Host(`duckduckgo-${HOSTNAME}.traefik.me`)"  # Using HOSTNAME for random subdomain
+      - "traefik.http.services.duckduckgo.loadbalancer.server.port=8080"
+      - "traefik.http.routers.duckduckgo.entrypoints=websecure"
+      - "traefik.http.routers.duckduckgo.tls=true"
+      - "traefik.http.routers.duckduckgo.tls.certresolver=myresolver"
     ports:
-      - "8080:8080"  # Expose the port for the container (if required)
+      - "8080:8080"
     environment:
       - MCP_SERVER=true
